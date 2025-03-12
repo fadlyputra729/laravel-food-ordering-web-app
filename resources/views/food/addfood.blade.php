@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="flex flex-col items-center">
-  <form action="/food/create" method="POST" enctype="multipart/form-data" class="w-50">
+  <form action="{{ route('food.store') }}" method="POST" enctype="multipart/form-data" class="w-50">
   @csrf
     <div class="shadow sm:rounded-md sm:overflow-hidden">
       <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
@@ -16,7 +16,7 @@
                 </span>
               @enderror
             </div>
-            
+
           </div>
         </div>
 

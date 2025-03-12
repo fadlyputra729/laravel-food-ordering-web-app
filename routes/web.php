@@ -14,36 +14,25 @@ Auth::routes();
 Route::get('logout', [LoginController::class, 'logout']);
 
 // food routes with policy
-Route::get('/updatefood/{food}', [FoodController::class, 'getForUpdate'])->middleware('auth');
-Route::get('/home', [FoodController::class, 'index']);
-Route::get('/home/{type}', [FoodController::class, 'filter']);
-Route::get('/food/viewfood', [FoodController::class, 'adminIndex'])->middleware('auth');
-Route::view('/food/addfood', 'food.addfood')->middleware('auth');
-Route::post('/food/create', [FoodController::class, 'create']);
-Route::get('/food/{food}', [FoodController::class, 'show']);
-Route::post('/food/{food}', [FoodController::class, 'update']);
-Route::delete('/food/{food}', [FoodController::class, 'destroy']);
-Route::post('/food/addfood', [FoodController::class, 'create']);
+Route::get('updatefood/{food}', [FoodController::class, 'getForUpdate'])->middleware('auth');
+Route::get('home', [FoodController::class, 'index']);
+Route::get('home/{type}', [FoodController::class, 'filter']);
+Route::get('food/viewfood', [FoodController::class, 'adminIndex'])->middleware('auth');
 
-
-// Order routes
-
+Route::view('food/addfood', 'food.addfood')->middleware('auth');
+Route::resource('food', FoodController::class);
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('order', [OrderController::class, 'show']);
-    Route::delete('/order/{order_id}', [OrderController::class, 'destroy']);
+    Route::get('order', [OrderController::class, 'index']);
+
+    Route::delete('order/{order_id}', [OrderController::class, 'destroy']);
+    Route::post('addToCart', [OrderController::class, 'updateCart']);
+    Route::delete('cart/remove/{food_id}', [OrderController::class, 'removeFromCart']);
+    Route::post('cart/placeorder', [OrderController::class, 'placeOrder']);
+
     Route::view('cart', 'cart');
-Route::post('/addToCart', [OrderController::class, 'updateCart']);
-Route::delete('/cart/remove/{food_id}', [OrderController::class, 'removeFromCart']);
-Route::post('/cart/placeorder', [OrderController::class, 'placeOrder']);
-
 });
-// Cart routes
 
-
-Route::post('/user/edit', [UserController::class, 'update']);
-Route::get('/user/edit', [UserController::class, 'updateView']);
-Route::delete('/user/{user}', [UserController::class, 'delete']);
-
+Route::resource('user', UserController::class);
 
 

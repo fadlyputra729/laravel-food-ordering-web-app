@@ -9,32 +9,22 @@ class Order extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
-
-    /**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'orders';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    protected $table = 'orders';
     protected $fillable = [
         'user_id',
         'date',
         'type',
         'deliveryAddress',
+        'total'
     ];
 
-    public function user() {
-        return $this->belongsTo(User::class); 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
-    public function food() {
-        return $this->belongsToMany(Food::class)->withPivot('quantity'); 
+    public function food()
+    {
+        return $this->belongsToMany(Food::class)->withPivot('quantity');
     }
 }
