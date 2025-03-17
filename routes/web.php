@@ -34,5 +34,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::resource('user', UserController::class);
+Route::get('/admin/orders', [OrderController::class, 'showAllOrders'])->middleware('auth');
 
 
