@@ -7,6 +7,7 @@ use App\Http\Controllers\FoodController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use \App\Http\Controllers\HistoryOrderController;
 
 Route::get('/', [FoodController::class, 'index']);
 Auth::routes();
@@ -31,9 +32,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('cart/placeorder', [OrderController::class, 'placeOrder']);
 
     Route::view('cart', 'cart');
+
+    Route::resource('history-order', HistoryOrderController::class);
 });
 
 Route::resource('user', UserController::class);
-Route::get('/admin/orders', [OrderController::class, 'showAllOrders'])->middleware('auth');
 
 

@@ -12,17 +12,6 @@ use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
 {
-    public function showAllOrders() {
-        if (Auth::user()->role !== 'admin') {
-            return redirect('/')->with('error', 'Unauthorized access.');
-        }
-    
-        $orders = Order::with('user')->orderBy('date', 'desc')->get();
-    
-        return view('admin.orders', compact('orders'));
-    }
-    
-    
     public function index()
     {
         $user_id = Auth::id();
@@ -187,5 +176,5 @@ class OrderController extends Controller
 
         return redirect($midtrans);
     }
-    
+
 }
