@@ -24,16 +24,14 @@ Route::view('food/addfood', 'food.addfood')->middleware('auth');
 Route::resource('food', FoodController::class);
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('order', [OrderController::class, 'index']);
+  Route::resource('order', OrderController::class);
 
-    Route::delete('order/{order_id}', [OrderController::class, 'destroy']);
-    Route::post('addToCart', [OrderController::class, 'updateCart']);
-    Route::delete('cart/remove/{food_id}', [OrderController::class, 'removeFromCart']);
-    Route::post('cart/placeorder', [OrderController::class, 'placeOrder']);
+  Route::post('addToCart', [OrderController::class, 'updateCart']);
+  Route::delete('cart/remove/{food_id}', [OrderController::class, 'removeFromCart']);
+  Route::post('cart/placeorder', [OrderController::class, 'placeOrder']);
+  Route::view('cart', 'cart');
 
-    Route::view('cart', 'cart');
-
-    Route::resource('history-order', HistoryOrderController::class);
+  Route::resource('history-order', HistoryOrderController::class);
 });
 
 Route::resource('user', UserController::class);

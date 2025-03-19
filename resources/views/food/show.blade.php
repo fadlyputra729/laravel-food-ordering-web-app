@@ -8,7 +8,7 @@
         <div class="flex flex-col p-4 h-full flex-grow">
             <div class="flex-grow flex flex-col justify-around">
                 <h1 class="font-bold font-sans text-2xl leading-8">{{ $food['name'] }}</h1>
-                <h1 class="font-semibold font-sans text-lg text-red-500 leading-8">Rp. {{ $food['price'] }}</h1>
+                <h1 class="font-semibold font-sans text-lg text-red-500 leading-8">Rp. {{ number_format($food['price']) }}</h1>
                 <h1 class="font-serif text-sm text-gray-600 leading-7">{{ $food['description'] }}</h1>
             </div>
             <div class="pt-3 flex flex-col flex-grow justify-around">

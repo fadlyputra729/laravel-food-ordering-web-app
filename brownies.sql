@@ -11,7 +11,7 @@
  Target Server Version : 110405 (11.4.5-MariaDB)
  File Encoding         : 65001
 
- Date: 12/03/2025 21:53:57
+ Date: 19/03/2025 21:29:05
 */
 
 SET NAMES utf8mb4;
@@ -57,11 +57,11 @@ CREATE TABLE `food`  (
 -- ----------------------------
 -- Records of food
 -- ----------------------------
-INSERT INTO `food` VALUES (1, 'Bolu Tape Keju', 70000.00, 'Bolu lembut dengan rasa tape keju 20 X 20', 'Bolu', 'storage/menu/bolu-tape.jpeg', '2025-01-16 08:28:40', '2025-01-16 08:28:40');
-INSERT INTO `food` VALUES (2, 'Brownies Panggang', 65000.00, 'Brownies dengan tekstur renyah di luar dan lembut di dalam. Ukuran 20x20', 'brownies', 'storage/menu/brownies-panggang.jpeg', '2025-01-16 08:28:40', '2025-01-16 08:28:40');
-INSERT INTO `food` VALUES (3, 'Brownies Ulang tahun', 70000.00, 'Brownies spesial untuk hari ulang tahun. Bisa request ucapan dan free lilin', 'brownies', 'storage/menu/brownis-ultah.jpeg', '2025-01-16 08:28:40', '2025-01-16 08:28:40');
-INSERT INTO `food` VALUES (4, 'Fuggie Brownies', 35000.00, 'Brownies fudgy dengan rasa cokelat yang pekat. Ukuran 22x10cm.', 'brownies', 'storage/menu/fuggie-brownies.jpeg', '2025-01-16 08:28:40', '2025-01-16 08:28:40');
-INSERT INTO `food` VALUES (5, 'Marmer Cake', 75000.00, 'Cake dengan motif marmer yang cantik dan lembut. Diameter 24cm.', 'Brownies', 'storage/menu/marmer-cake.jpeg', '2025-01-16 08:28:40', '2025-01-16 08:28:40');
+INSERT INTO `food` VALUES (1, 'Bolu Tape Keju', 70000.00, 'Bolu lembut dengan rasa tape keju 20 X 20', 'Bolu', 'storage/menu/bolu-tape.jpeg', '2025-01-16 15:28:40', '2025-01-16 15:28:40');
+INSERT INTO `food` VALUES (2, 'Brownies Panggang', 65000.00, 'Brownies dengan tekstur renyah di luar dan lembut di dalam. Ukuran 20x20', 'brownies', 'storage/menu/brownies-panggang.jpeg', '2025-01-16 15:28:40', '2025-01-16 15:28:40');
+INSERT INTO `food` VALUES (3, 'Brownies Ulang tahun', 70000.00, 'Brownies spesial untuk hari ulang tahun. Bisa request ucapan dan free lilin', 'brownies', 'storage/menu/brownis-ultah.jpeg', '2025-01-16 15:28:40', '2025-01-16 15:28:40');
+INSERT INTO `food` VALUES (4, 'Fuggie Brownies', 35000.00, 'Brownies fudgy dengan rasa cokelat yang pekat. Ukuran 22x10cm.', 'brownies', 'storage/menu/fuggie-brownies.jpeg', '2025-01-16 15:28:40', '2025-01-16 15:28:40');
+INSERT INTO `food` VALUES (5, 'Marmer Cake', 75000.00, 'Cake dengan motif marmer yang cantik dan lembut. Diameter 24cm.', 'Brownies', 'storage/menu/marmer-cake.jpeg', '2025-01-16 15:28:40', '2025-01-16 15:28:40');
 
 -- ----------------------------
 -- Table structure for food_order
@@ -79,26 +79,32 @@ CREATE TABLE `food_order`  (
   INDEX `food_order_food_id_foreign`(`food_id` ASC) USING BTREE,
   CONSTRAINT `food_order_food_id_foreign` FOREIGN KEY (`food_id`) REFERENCES `food` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `food_order_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of food_order
 -- ----------------------------
-INSERT INTO `food_order` VALUES (4, 2, 4, 1, NULL, NULL);
-INSERT INTO `food_order` VALUES (5, 2, 5, 1, NULL, NULL);
 INSERT INTO `food_order` VALUES (6, 3, 1, 1, NULL, NULL);
 INSERT INTO `food_order` VALUES (7, 3, 3, 1, NULL, NULL);
-INSERT INTO `food_order` VALUES (10, 6, 1, 1, NULL, NULL);
-INSERT INTO `food_order` VALUES (11, 6, 2, 1, NULL, NULL);
 INSERT INTO `food_order` VALUES (12, 7, 1, 1, NULL, NULL);
 INSERT INTO `food_order` VALUES (13, 7, 2, 1, NULL, NULL);
 INSERT INTO `food_order` VALUES (14, 8, 2, 1, NULL, NULL);
 INSERT INTO `food_order` VALUES (15, 8, 3, 3, NULL, NULL);
 INSERT INTO `food_order` VALUES (16, 8, 4, 2, 70000, 1400000);
 INSERT INTO `food_order` VALUES (17, 11, 3, 1, 70000, 70000);
-INSERT INTO `food_order` VALUES (18, 12, 3, 4, NULL, NULL);
-INSERT INTO `food_order` VALUES (19, 13, 2, 2, 65000, 130000);
-INSERT INTO `food_order` VALUES (20, 13, 3, 1, 70000, 70000);
+INSERT INTO `food_order` VALUES (21, 14, 3, 2, 70000, 140000);
+INSERT INTO `food_order` VALUES (22, 15, 2, 4, 65000, 260000);
+INSERT INTO `food_order` VALUES (23, 16, 2, 4, 65000, 260000);
+INSERT INTO `food_order` VALUES (24, 18, 2, 2, 65000, 130000);
+INSERT INTO `food_order` VALUES (25, 20, 2, 1, 65000, 65000);
+INSERT INTO `food_order` VALUES (26, 21, 2, 1, 65000, 65000);
+INSERT INTO `food_order` VALUES (27, 22, 2, 2, 65000, 130000);
+INSERT INTO `food_order` VALUES (28, 23, 2, 1, 65000, 65000);
+INSERT INTO `food_order` VALUES (29, 24, 2, 1, 65000, 65000);
+INSERT INTO `food_order` VALUES (30, 24, 3, 1, 70000, 70000);
+INSERT INTO `food_order` VALUES (31, 25, 3, 1, 70000, 70000);
+INSERT INTO `food_order` VALUES (32, 26, 2, 5, 65000, 325000);
+INSERT INTO `food_order` VALUES (33, 28, 2, 1, 65000, 65000);
 
 -- ----------------------------
 -- Table structure for migrations
@@ -133,6 +139,9 @@ CREATE TABLE `orders`  (
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `date` datetime NOT NULL,
   `type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('selesai','proses','batal') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT 'proses',
+  `status_pembayaran` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `url_pembayaran` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `deliveryAddress` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `total` decimal(15, 0) NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -140,21 +149,32 @@ CREATE TABLE `orders`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `orders_user_id_foreign`(`user_id` ASC) USING BTREE,
   CONSTRAINT `orders_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES (2, 2, '2025-01-16 15:55:15', 'delivery', 'Jl Tj seneng', NULL, NULL, NULL);
-INSERT INTO `orders` VALUES (3, 2, '2025-01-16 15:59:32', 'delivery', 'Jl Tj seneng', NULL, NULL, NULL);
-INSERT INTO `orders` VALUES (6, 3, '2025-02-12 13:15:54', 'delivery', 'jl harapan', NULL, NULL, NULL);
-INSERT INTO `orders` VALUES (7, 3, '2025-02-12 13:28:53', 'delivery', 'jl harapan', NULL, NULL, NULL);
-INSERT INTO `orders` VALUES (8, 3, '2025-02-12 13:34:24', 'pickup', 'jl harapan', NULL, NULL, NULL);
-INSERT INTO `orders` VALUES (9, 2, '2025-03-12 14:06:54', 'pickup', 'Jl Tj seneng', NULL, NULL, NULL);
-INSERT INTO `orders` VALUES (10, 2, '2025-03-12 14:07:41', 'pickup', 'Jl Tj seneng', NULL, NULL, NULL);
-INSERT INTO `orders` VALUES (11, 2, '2025-03-12 14:09:15', 'pickup', 'Jl Tj seneng', NULL, NULL, NULL);
-INSERT INTO `orders` VALUES (12, 2, '2025-03-12 14:14:13', 'pickup', 'Jl Tj seneng', NULL, NULL, NULL);
-INSERT INTO `orders` VALUES (13, 2, '2025-03-12 14:32:37', 'pickup', 'Jl Tj seneng', 200000, '2025-03-12 07:32:37', '2025-03-12 07:32:38');
+INSERT INTO `orders` VALUES (3, 2, '2025-01-16 15:59:32', 'delivery', 'batal', NULL, NULL, 'Jl Tj seneng', NULL, NULL, NULL);
+INSERT INTO `orders` VALUES (7, 3, '2025-02-12 13:28:53', 'delivery', 'proses', NULL, NULL, 'jl harapan', NULL, NULL, NULL);
+INSERT INTO `orders` VALUES (8, 3, '2025-02-12 13:34:24', 'pickup', 'proses', NULL, NULL, 'jl harapan', NULL, NULL, NULL);
+INSERT INTO `orders` VALUES (9, 2, '2025-03-12 14:06:54', 'pickup', 'proses', NULL, NULL, 'Jl Tj seneng', NULL, NULL, NULL);
+INSERT INTO `orders` VALUES (10, 2, '2025-03-12 14:07:41', 'pickup', 'proses', NULL, NULL, 'Jl Tj seneng', NULL, NULL, NULL);
+INSERT INTO `orders` VALUES (11, 2, '2025-03-12 14:09:15', 'pickup', 'proses', NULL, NULL, 'Jl Tj seneng', NULL, NULL, NULL);
+INSERT INTO `orders` VALUES (14, 2, '2025-03-19 20:41:21', 'delivery', 'proses', NULL, NULL, 'Jl Tj seneng', 140000, '2025-03-19 20:41:21', '2025-03-19 20:41:21');
+INSERT INTO `orders` VALUES (15, 2, '2025-03-19 20:42:44', 'pickup', 'proses', NULL, NULL, 'Jl Tj seneng', 260000, '2025-03-19 20:42:44', '2025-03-19 20:42:44');
+INSERT INTO `orders` VALUES (16, 2, '2025-03-19 20:48:55', 'pickup', 'proses', NULL, NULL, 'Jl Tj seneng', NULL, '2025-03-19 20:48:55', '2025-03-19 20:48:55');
+INSERT INTO `orders` VALUES (17, 2, '2025-03-19 20:49:11', 'pickup', 'proses', NULL, NULL, 'Jl Tj seneng', NULL, '2025-03-19 20:49:11', '2025-03-19 20:49:11');
+INSERT INTO `orders` VALUES (18, 2, '2025-03-19 20:54:21', 'pickup', 'proses', NULL, NULL, 'Jl Tj seneng', 130000, '2025-03-19 20:54:21', '2025-03-19 20:54:21');
+INSERT INTO `orders` VALUES (19, 2, '2025-03-19 20:55:53', 'pickup', 'proses', NULL, NULL, 'Jl Tj seneng', NULL, '2025-03-19 20:55:53', '2025-03-19 20:55:53');
+INSERT INTO `orders` VALUES (20, 2, '2025-03-19 20:56:07', 'pickup', 'proses', NULL, NULL, 'Jl Tj seneng', 65000, '2025-03-19 20:56:07', '2025-03-19 20:56:07');
+INSERT INTO `orders` VALUES (21, 2, '2025-03-19 20:56:48', 'pickup', 'proses', NULL, NULL, 'Jl Tj seneng', 65000, '2025-03-19 20:56:48', '2025-03-19 20:56:48');
+INSERT INTO `orders` VALUES (22, 2, '2025-03-19 20:57:33', 'pickup', 'proses', NULL, NULL, 'Jl Tj seneng', 130000, '2025-03-19 20:57:33', '2025-03-19 20:57:33');
+INSERT INTO `orders` VALUES (23, 2, '2025-03-19 21:05:17', 'pickup', 'proses', 'pending', 'https://app.sandbox.midtrans.com/snap/v4/redirection/abd6c6b0-1657-45bf-a65a-4da5848df71d', 'Jl Tj seneng', 65000, '2025-03-19 21:05:17', '2025-03-19 21:05:17');
+INSERT INTO `orders` VALUES (24, 2, '2025-03-19 21:07:01', 'pickup', 'proses', 'success', 'https://app.sandbox.midtrans.com/snap/v4/redirection/cc5e4ba1-98e4-4720-bee7-2b35c06a1304', 'Jl Tj seneng', 135000, '2025-03-19 21:07:01', '2025-03-19 21:07:02');
+INSERT INTO `orders` VALUES (25, 2, '2025-03-19 21:14:54', 'pickup', 'proses', 'pending', 'https://app.sandbox.midtrans.com/snap/v4/redirection/8b26a9a3-68e2-4452-b2e7-3ab1b7557dc4', 'Jl Tj seneng', 70000, '2025-03-19 21:14:54', '2025-03-19 21:14:55');
+INSERT INTO `orders` VALUES (26, 2, '2025-03-19 21:27:05', 'pickup', 'proses', 'pending', 'https://app.sandbox.midtrans.com/snap/v4/redirection/37769d93-e9cc-4cea-843d-1782b6b23f7d', 'Jl Tj seneng', 325000, '2025-03-19 21:27:05', '2025-03-19 21:27:05');
+INSERT INTO `orders` VALUES (27, 2, '2025-03-19 21:27:33', 'delivery', 'proses', NULL, NULL, 'Jl Tj seneng', NULL, '2025-03-19 21:27:33', '2025-03-19 21:27:33');
+INSERT INTO `orders` VALUES (28, 2, '2025-03-19 21:27:49', 'delivery', 'selesai', 'pending', 'https://app.sandbox.midtrans.com/snap/v4/redirection/2b5895c8-8bcf-4786-933b-ab4e201d9066', 'Jl Tj seneng', 65000, '2025-03-19 21:27:49', '2025-03-19 21:28:15');
 
 -- ----------------------------
 -- Table structure for password_resets
@@ -214,8 +234,8 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 'admin', 'admin@gmail.com', NULL, 1, '$2y$10$PEE7ThNK4Ami5ealjyJ/WO6aoz.KTD6gvYqPqnBJ/DE54VW98lc/u', '123 Main St', 'Y6XnMs56LQZPbPk6a1PhQDmJLDnXzLDIohrchGQ34D4zVZUkKRp44A6PcOBv');
-INSERT INTO `users` VALUES (2, 'Fadly Putra 1', 'fadlyputra909@gmail.com', NULL, 0, '$2y$10$FseKE85yoBVDPkeaFtV3aubaMWRiQUKbny21kvU4NY3QiDSSXYjIW', 'Jl Tj seneng', NULL);
+INSERT INTO `users` VALUES (1, 'admin', 'admin@gmail.com', NULL, 1, '$2y$10$PEE7ThNK4Ami5ealjyJ/WO6aoz.KTD6gvYqPqnBJ/DE54VW98lc/u', '123 Main St', 'z4pNu0jY2cYw7fFqxLirnfty6C947k477QRdjTS4Ik59m6dvzNIcrBvX68jd');
+INSERT INTO `users` VALUES (2, 'Fadly Putra 1', 'fadlyputra909@gmail.com', NULL, 0, '$2y$10$FseKE85yoBVDPkeaFtV3aubaMWRiQUKbny21kvU4NY3QiDSSXYjIW', 'Jl Tj seneng', 'ZVlYknSWqPJkrS6b1vhkbeehSmguzUGbXcQbbe03FFrYKNuPuorV9dEDMZ32');
 INSERT INTO `users` VALUES (3, 'FADLY PUTRA PRATAMA', 'pandawap364@gmail.com', NULL, 0, '$2y$10$DiRZnU5UAEI3hW/tQbXwS.Hl4TUFADNBRVz6/OvNmsTOA5bv3hx4u', 'jl harapan', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
