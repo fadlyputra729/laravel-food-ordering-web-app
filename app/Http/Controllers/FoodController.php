@@ -20,7 +20,6 @@ class FoodController extends Controller
         if (request()->has('asc')) {
             if (request()->asc == 'true') {
                 $foods = Food::orderBy('price')->orderBy('name')->paginate(12);
-                // orderBy('name') so that for those foods with same price, it will sort alphabetically by their name
             }
             if (request()->asc == 'false') {
                 $foods = Food::orderBy('price', 'DESC')->orderBy('name')->paginate(12);

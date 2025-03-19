@@ -26,7 +26,7 @@ if (!empty(session('cart'))) {
             </div>
             <div class="flex-1 text-right text-2xl self-center">
                 @if (!empty(session('cart')))
-                    <span class="mr-8 "> Total: Rp. {{ $total }} </span>
+                    <span class="mr-8 "> Total: Rp. {{ number_format($total) }} </span>
                 @endif
             </div>
         </div>
@@ -35,7 +35,7 @@ if (!empty(session('cart'))) {
     {{-- Check if cart is not empty --}}
     @if (count(session('cart')) != 0)
         {{-- Cart --}}
-   
+
 
         @foreach (session('cart') as $food)
     <div class="px-3 py-2 cart-item"> <!-- Added class 'cart-item' -->
@@ -46,7 +46,7 @@ if (!empty(session('cart'))) {
                         <div class="flex rounded-lg">
                             <img class="flex h-28 w-44 object-fill rounded-lg"
                                 src="{{ asset($food['picture']) }}">
-                        </div>                                
+                        </div>
                         <div class="flex flex-col place-content-center px-4 py-3 leading-normal w-4/6">
                             <h5 class="flex mb-2 text-2xl font-bold tracking-tight text-gray-900 foodName">
                                 {{ $food['name'] }}
@@ -55,8 +55,8 @@ if (!empty(session('cart'))) {
                                 Quantity: <b>&nbsp;{{ $food['quantity'] }}</b>
                             </p>
                             <p class="flex font-normal text-gray-700 total">
-                                Harga: <b>&nbsp;Rp. {{ $food['price'] * $food['quantity'] }} &ensp;</b> 
-                                <span class="opacity-60"> [Rp. {{ $food['price'] }} per unit] </span>
+                                Harga: <b>&nbsp;Rp. {{ number_format( $food['price'] * $food['quantity'])  }} &ensp;</b>
+                                <span class="opacity-60"> [Rp. {{ number_format($food['price']) }} per unit] </span>
                             </p>
                         </div>
                         <div class="flex justify-center leading-normal w-1/6">
@@ -73,7 +73,7 @@ if (!empty(session('cart'))) {
 @endforeach
 
 
-        
+
         <div class="flex justify-center">
             <button type="button"
                 class="openOrderModal shadow leading-tight bg-green-600 text-white text-xl font-semibold rounded-lg m-4 px-12 py-3 text-sm focus:outline-none focus:border-white">
@@ -174,8 +174,7 @@ if (!empty(session('cart'))) {
                         <div class="flex justify-end">
                             <button type="button"
                                 class="closeOrderModal bg-gray-700 text-gray-100 rounded px-4 py-2 mr-1">Close</Button>
-                            <button type="button" class="openPaymentModal bg-green-600 text-white rounded px-4 py-2"
-                                onclick="openWhatsApp()">Proses ke WhatsApp</Button>
+                            <button type="button" class="openPaymentModal bg-green-600 text-white rounded px-4 py-2">Pesan</Button>
                         </div>
                     </div>
                 </form>
@@ -341,42 +340,26 @@ if (!empty(session('cart'))) {
             document.getElementById('address').defaultValue = 'abc';
         }
 
-    function openWhatsApp() {
-        let foodItems = document.querySelectorAll('.cart-item'); // Select all cart items
-        let address = document.getElementById('address').value;
-        let whatsappMessage = `*Pesanan Baru!*\n\n`;
-
-        foodItems.forEach(item => {
-            let foodName = item.querySelector('.foodName').textContent.trim();
-            let quantity = item.querySelector('.quantity').textContent.trim().replace('Quantity:', '').trim();
-            let total = item.querySelector('.total').textContent.trim().replace('Harga:', '').trim();
-
-            whatsappMessage += `*Cake:* ${foodName}\n*Jumlah:* ${quantity}\n*Total:* ${total}\n\n`;
-        });
-
-        whatsappMessage += `*Alamat Pengiriman:* ${address}\n\nTerima kasih atas pesanannya!`;
-
-        let encodedMessage = encodeURIComponent(whatsappMessage);
-
-        // Open WhatsApp with the prepared message
-        window.open(`https://wa.me/+628197922146?text=${encodedMessage}`, '_blank');
-    }
-
-
-        // function openWhatsApp() {
-        //     let foodName = document.getElementById('foodName').textContent.trim();
-        //     let quantity = document.getElementById('quantity').textContent.trim().replace('Quantity:', '').trim();
-        //     let total = document.getElementById('total').textContent.trim().replace('Harga:', '').trim();
-        //     let address = document.getElementById('address').value;
-
-        //     let whatsappMessage =
-        //         `*Pesanan Baru!*\n\n*Cake:* ${foodName}\n*Jumlah:* ${quantity}\n*Total:* ${total}\n*Alamat Pengiriman:* ${address}\n\nTerima kasih atas pesanannya!`;
-
-        //     let encodedMessage = encodeURIComponent(whatsappMessage);
-
-        //     // Membuka WhatsApp dengan pesan yang sudah disiapkan
-        //     window.open(`https://wa.me/+628197922146?text=${encodedMessage}`, '_blank');
-        // }
+    // function openWhatsApp() {
+    //     let foodItems = document.querySelectorAll('.cart-item'); // Select all cart items
+    //     let address = document.getElementById('address').value;
+    //     let whatsappMessage = `*Pesanan Baru!*\n\n`;
+    //
+    //     foodItems.forEach(item => {
+    //         let foodName = item.querySelector('.foodName').textContent.trim();
+    //         let quantity = item.querySelector('.quantity').textContent.trim().replace('Quantity:', '').trim();
+    //         let total = item.querySelector('.total').textContent.trim().replace('Harga:', '').trim();
+    //
+    //         whatsappMessage += `*Cake:* ${foodName}\n*Jumlah:* ${quantity}\n*Total:* ${total}\n\n`;
+    //     });
+    //
+    //     whatsappMessage += `*Alamat Pengiriman:* ${address}\n\nTerima kasih atas pesanannya!`;
+    //
+    //     let encodedMessage = encodeURIComponent(whatsappMessage);
+    //
+    //     // Open WhatsApp with the prepared message
+    //     window.open(`https://wa.me/+628197922146?text=${encodedMessage}`, '_blank');
+    // }
 
         $('.openPaymentModal').on('click', function(e) {
             if (document.getElementById('deliveryType').checked) {
@@ -385,7 +368,7 @@ if (!empty(session('cart'))) {
                     setTimeout(function() {
                         $('#payment-modal').addClass('invisible');
                         showPaymentSuccess();
-                        openWhatsApp();
+                        // openWhatsApp();
                     }, 3000);
                 }
             } else {
@@ -393,7 +376,7 @@ if (!empty(session('cart'))) {
                 setTimeout(function() {
                     $('#payment-modal').addClass('invisible');
                     showPaymentSuccess();
-                    openWhatsApp();
+                    // openWhatsApp();
                 }, 3000);
             }
         });

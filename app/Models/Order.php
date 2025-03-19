@@ -14,6 +14,9 @@ class Order extends Model
         'user_id',
         'date',
         'type',
+        'status',
+        'status_pembayaran',
+        'url_pembayaran',
         'deliveryAddress',
         'total'
     ];
