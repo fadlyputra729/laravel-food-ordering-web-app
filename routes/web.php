@@ -8,22 +8,21 @@ use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use \App\Http\Controllers\HistoryOrderController;
+use \App\Http\Controllers\HomeController;
 
-Route::get('/', [FoodController::class, 'index']);
+Route::get('home/{type}', [HomeController::class, 'filter']);
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
+
 Auth::routes();
 
 Route::get('logout', [LoginController::class, 'logout']);
 
-// food routes with policy
 Route::get('updatefood/{food}', [FoodController::class, 'getForUpdate'])->middleware('auth');
-Route::get('home', [FoodController::class, 'index']);
-Route::get('home/{type}', [FoodController::class, 'filter']);
 Route::get('food/viewfood', [FoodController::class, 'adminIndex'])->middleware('auth');
-
-Route::view('food/addfood', 'food.addfood')->middleware('auth');
-Route::resource('food', FoodController::class);
+Route::resource('food', FoodController::class)->middleware('auth');
 
 Route::middleware(['auth'])->group(function () {
+  Route::get('order/{id}/print', [OrderController::class, 'print'])->name('order.print');
   Route::resource('order', OrderController::class);
 
   Route::post('addToCart', [OrderController::class, 'updateCart']);

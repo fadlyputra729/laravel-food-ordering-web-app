@@ -1,8 +1,9 @@
 @extends('layouts.app')
 @section('content')
 <div class="flex flex-col items-center">
-  <form action="/food/{{$food['id']}}" method="POST" enctype="multipart/form-data" class="w-50">
+  <form action="{{ route('food.update', $food['id']) }}" method="POST" enctype="multipart/form-data" class="w-50">
   @csrf
+    @method('PUT')
     <div class="shadow sm:rounded-md sm:overflow-hidden">
       <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
         <div>
@@ -44,13 +45,25 @@
         </div>
 
         <div>
+          <label for="food" class="block text-lg font-medium text-gray-700"> Stok </label>
+          <div class="mt-1 flex flex-col rounded-md">
+            <input required value="{{$food['stock']}}" type="number" name="stock" id="stock" class="shadow-sm @error('stock') is-invalid @enderror p-1 border focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-md sm:text-lg border-gray-300" placeholder="20000">
+            @error('stock')
+            <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+            @enderror
+          </div>
+        </div>
+
+        <div>
           <label for="food type" class="block text-lg font-medium text-gray-700">Tipe Makanan</label>
           <div>
           <select name="type" id="type" class="flex justify-center mt-1 flex rounded-md shadow-sm p-1 border focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-md sm:text-lg border-gray-300">
             <option value="Brownies" {{($food['type'] == "Brownies") ? "selected" : ""}}>Brownies</option>
             <option value="Bolu" {{($food['type'] == "Bolu") ? "selected" : ""}}>Bolu</option>
             {{-- <option value="Japanese" {{($food['type'] == "Japanese") ? "selected" : ""}}>Japanese</option> --}}
-            
+
           </select>
         </div>
 

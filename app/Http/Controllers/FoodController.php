@@ -15,161 +15,111 @@ use Illuminate\Validation\Rule;
 
 class FoodController extends Controller
 {
-    public function index()
-    {
-        if (request()->has('asc')) {
-            if (request()->asc == 'true') {
-                $foods = Food::orderBy('price')->orderBy('name')->paginate(12);
-            }
-            if (request()->asc == 'false') {
-                $foods = Food::orderBy('price', 'DESC')->orderBy('name')->paginate(12);
-            }
-        } else {
-            $foods = Food::paginate(12);
-        }
-        return view('food.home', ['foods' => $foods]);
+  public function index()
+  {
+    $foods = Food::orderBy('id', 'desc')->paginate(10);
+    return view('food.viewfood', ['foods' => $foods]);
+  }
+
+  public function create()
+  {
+    return view('food.addfood');
+  }
+
+  public function store(Request $food)
+  {
+    if (!$food->hasFile('picture')) {
+      return redirect()->back()->withErrors(['picture' => 'No file uploaded.']);
     }
 
-    public function filter($type)
-    {
-        $foods = Food::where('type', '=', $type);
+    $food->validate([
+      'name' => 'required | unique:food',
+      'description' => 'required',
+      'price' => 'required',
+      'type' => 'required',
+      'stock' => 'required|integer',
+      'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+    ]);
 
-        if (request()->has('asc')) {
-            if (request()->asc == 'true') {
-                $sorted = $foods->orderBy('price');
-            }
-            if (request()->asc == 'false') {
-                $sorted = $foods->orderBy('price', 'DESC');
-            }
-        } else {
-            $sorted = $foods;
-        }
-        return view('food.home', ['foods' => $foods->paginate(12)]);
+    $picturePath = $food->file('picture')->store('img/', 'public');
+
+    $foodData = Food::create([
+      'name' => $food->input('name'),
+      'description' => $food->input('description'),
+      'price' => $food->input('price'),
+      'type' => $food->input('type'),
+      'stock' => $food->input('stock'),
+      'picture' => $picturePath,
+    ]);
+
+    $newFileName = str_replace(' ', '-', strtolower($foodData->name)) . '.' . $food->file('picture')->extension();
+    $newFilePath = 'menu/' . $newFileName;
+
+    Storage::disk('public')->move($picturePath, $newFilePath);
+
+    $foodData->picture = 'storage/' . $newFilePath;
+    $foodData->save();
+
+    return redirect()->route('food.index');
+  }
+
+  public function update(Request $food, $id)
+  {
+    // Validate the request
+    $food->validate([
+      'name' => [
+        'required',
+        Rule::unique('food')->ignore($id),
+      ],
+      'description' => 'required',
+      'price' => 'required',
+      'type' => 'required',
+      'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Allow nullable for the picture
+    ]);
+
+    $existingFood = Food::find($id);
+
+    if (!$existingFood) {
+      return redirect()->back()->withErrors(['food' => 'Food item not found.']);
     }
 
-    public function sortByPrice($type)
-    {
-        if ($type) {
-            $foods = Food::orderBy('price')->paginate(12);
-        } else {
-            $foods = Food::orderByDesc('price')->paginate(12);
-        }
-
-        return view('food.home', ['foods' => $foods]);
+    $picturePath = $existingFood->picture;
+    if ($food->hasFile('picture')) {
+      $uploadedPicturePath = $food->file('picture')->store('img/', 'public');
+      $newFileName = str_replace(' ', '-', strtolower($food['name'])) . '.' . $food->file('picture')->extension();
+      $newFilePath = 'menu/' . $newFileName;
+      Storage::disk('public')->move($uploadedPicturePath, $newFilePath);
+      $picturePath = 'storage/' . $newFilePath;
     }
 
-    public function adminIndex()
-    {
-        $foods = Food::orderBy('id', 'desc')->paginate(10);
-        return view('food.viewfood', ['foods' => $foods]);
-    }
+    // Update the food item
+    $existingFood->update([
+      'name' => $food['name'],
+      'description' => $food['description'],
+      'price' => $food['price'],
+      'type' => $food['type'],
+      'stock' => $food['stock'],
+      'picture' => $picturePath,
+    ]);
 
-    public function show($id)
-    {
-        $food = Food::findOrFail($id);
-        return view('food.show', ['food' => $food]);
-    }
+    return redirect()->route('food.index');
+  }
 
-    public function getForUpdate($id)
-    {
-        $food = Food::findOrFail($id);
-        return view('food.updatefood', ['food' => $food]);
-    }
+  public function show($id)
+  {
+    $food = Food::findOrFail($id);
+    return view('food.show', ['food' => $food]);
+  }
 
-    public function destroy($id)
-    {
-        $food = Food::findOrFail($id);
-        $food->delete();
-        return redirect('/food/viewfood');
-    }
-
-    public function store(Request $food)
-    {
-        // Debugging: Check if file is uploaded
-        if (!$food->hasFile('picture')) {
-            return redirect()->back()->withErrors(['picture' => 'No file uploaded.']);
-        }
-
-        $food->validate([
-            'name' => 'required | unique:food',
-            'description' => 'required',
-            'price' => 'required',
-            'type' => 'required',
-            'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
-        ]);
-
-        // Handle file upload and store it in public/img/food_pictures directory
-        $picturePath = $food->file('picture')->store('img/', 'public');
-
-        $foodData = Food::create([
-            'name' => $food->input('name'),
-            'description' => $food->input('description'),
-            'price' => $food->input('price'),
-            'type' => $food->input('type'),
-            'picture' => $picturePath, // Keep the original path for now
-        ]);
-
-        // Rename the uploaded file to match the food's name
-        $newFileName = str_replace(' ', '-', strtolower($foodData->name)) . '.' . $food->file('picture')->extension();
-        $newFilePath = 'menu/' . $newFileName;
-
-        Storage::disk('public')->move($picturePath, $newFilePath);
-
-        // Update the food record with the new file path
-        $foodData->picture = 'storage/' . $newFilePath;
-        $foodData->save();
-
-        return redirect('/food/viewfood');
-    }
-
-    public function update(Request $food, $id)
-    {
-        // Validate the request
-        $food->validate([
-            'name' => [
-                'required',
-                Rule::unique('food')->ignore($id),
-            ],
-            'description' => 'required',
-            'price' => 'required',
-            'type' => 'required',
-            'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Allow nullable for the picture
-        ]);
-
-        // Retrieve the existing food item
-        $existingFood = Food::find($id);
-
-        if (!$existingFood) {
-            return redirect()->back()->withErrors(['food' => 'Food item not found.']);
-        }
-
-        // Handle picture update
-        $picturePath = $existingFood->picture; // Default to existing picture
-        if ($food->hasFile('picture')) {
-            // Store new picture
-            $uploadedPicturePath = $food->file('picture')->store('img/', 'public');
-
-            // Rename the uploaded file to match the food's name
-            $newFileName = str_replace(' ', '-', strtolower($food['name'])) . '.' . $food->file('picture')->extension();
-            $newFilePath = 'menu/' . $newFileName;
-
-            Storage::disk('public')->move($uploadedPicturePath, $newFilePath);
-
-            // Update the picture path
-            $picturePath = 'storage/' . $newFilePath;
-        }
-
-        // Update the food item
-        $existingFood->update([
-            'name' => $food['name'],
-            'description' => $food['description'],
-            'price' => $food['price'],
-            'type' => $food['type'],
-            'picture' => $picturePath,
-        ]);
-
-        return redirect('/food/viewfood');
-    }
-
-
+  public function edit($id)
+  {
+    $food = Food::findOrFail($id);
+    return view('food.updatefood', ['food' => $food]);
+  }
+  public function destroy($id)
+  {
+    $food = Food::findOrFail($id);
+    $food->delete();
+    return redirect()->route('food.index');
+  }
 }

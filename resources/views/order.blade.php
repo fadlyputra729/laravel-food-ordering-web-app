@@ -19,7 +19,7 @@
         <div class="px-3 py-2">
           <div class="flex flex-row p-4 leading-normal border shadow-md hover:bg-gray-100">
             <div class="p-2 w-1/5">
-              <p class="mb-1"> ID Pesanan: <span class="font-semibold"> {{$order->id}} </span></p>
+              <p class="mb-1"> ID Pesanan: <span class="font-semibold">ORDER-{{$order->id}} </span></p>
               <p class="mb-1"> Tanggal: <span
                   class="font-semibold"> {{ Carbon\Carbon::parse($order->date)->locale('id')->translatedFormat('j F Y') }} </span>
               </p>
@@ -29,6 +29,10 @@
                   class="font-semibold capitalize"> {{ $order->status_pembayaran }} </span></p>
               <p class="mb-1"> Total: <span
                   class="font-semibold capitalize"> Rp. {{ number_format($order->total) }} </span></p>
+              <a href="{{ route('order.print', $order['id']) }}" target="_blank"
+                 class="font-semibold btn btn-success mr-2">
+                <span> Cetak Invoice </span>
+              </a>
               <div class="mt-2">
                 @if(isset($order->url_pembayaran) && !in_array($order->status_pembayaran, ['success', 'expired']))
                   <a href="{{ $order->url_pembayaran }}"

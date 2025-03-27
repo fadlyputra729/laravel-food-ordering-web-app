@@ -45,6 +45,18 @@
         </div>
 
         <div>
+          <label for="food" class="block text-lg font-medium text-gray-700"> Stok </label>
+          <div class="mt-1 flex flex-col rounded-md">
+            <input required type="number" name="stock" id="stock" class="shadow-sm @error('stock') is-invalid @enderror p-1 border focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-md sm:text-lg border-gray-300">
+            @error('price')
+            <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+            @enderror
+          </div>
+        </div>
+
+        <div>
           <label for="food type" class="block text-lg font-medium text-gray-700">Tipe Makanan</label>
           <div>
           <select name="type" id="type" class="flex justify-center mt-1 flex rounded-md shadow-sm p-1 border focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-md sm:text-lg border-gray-300">>

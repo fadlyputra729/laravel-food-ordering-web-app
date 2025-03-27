@@ -39,10 +39,6 @@ class OrderController extends Controller
     $order->save();
   }
 
-  public function addToOrder(Order $order)
-  {
-  }
-
   public function destroy($id)
   {
     $order = Order::findOrFail($id);
@@ -89,7 +85,7 @@ class OrderController extends Controller
         Session::flash('success', 'Berhasil menambahkan ke dalam keranjang.');
       }
 
-      return '/home';
+      return '/';
     } else {
       Session::flash('info', 'Anda harus login untuk menambahkan ke keranjang dan memesan');
       return '/login';
@@ -128,33 +124,61 @@ class OrderController extends Controller
 
   public function placeOrder(Request $request, CheckoutService $checkoutService)
   {
-    $order = Order::create([
-      'user_id' => Auth::id(),
-      'date' => Carbon::now(),
-      'type' => $request->type,
-      'deliveryAddress' => $request->address,
-    ]);
+    DB::beginTransaction();
 
-    $carts = Session::pull('cart');
-    $total = 0;
-    foreach ($carts as $item) {
-      $food = Food::findOrFail($item['id']);
-      $totalItem = $item['quantity'] * $food['price'];
-      $total += $totalItem;
-      $order->food()->attach($food, [
-        'quantity' => $item['quantity'],
-        'harga_item' => $food['price'],
-        'total_item' => $totalItem
+    try {
+      $order = Order::create([
+        'user_id' => Auth::id(),
+        'date' => Carbon::now(),
+        'type' => $request->type,
+        'deliveryAddress' => $request->address,
       ]);
-    }
 
-    $order->update(['total' => $total]);
-    $midtrans = $checkoutService->processCheckout($order);
-    $order->update([
-      'url_pembayaran' => $midtrans->redirect_url,
-      'status_pembayaran' => 'pending',
-    ]);
-    return redirect($midtrans->redirect_url)->with('success', 'Successfully placed order.');
+      $total = 0;
+      $carts = Session::get('cart');
+      foreach ($carts as $item) {
+        $food = Food::findOrFail($item['id']);
+
+        if ($food['stock'] < $item['quantity']) {
+          DB::rollBack();
+          return back()->with('warning', "Stok Tidak Cukup {$food->name}. Stok Tersedia: {$food->stock}");
+        }
+
+        $totalItem = $item['quantity'] * $food['price'];
+        $total += $totalItem;
+
+        $order->food()->attach($food, [
+          'quantity' => $item['quantity'],
+          'harga_item' => $food['price'],
+          'total_item' => $totalItem
+        ]);
+
+        $food->update(['stock' => $food['stock'] - $item['quantity']]);
+      }
+
+      $order->update(['total' => $total]);
+
+      $midtrans = $checkoutService->processCheckout($order);
+
+      $order->update([
+        'url_pembayaran' => $midtrans->redirect_url,
+        'status_pembayaran' => 'pending',
+      ]);
+
+      DB::commit();
+      Session::pull('cart');
+
+      return redirect($midtrans->redirect_url)->with('success', 'Successfully placed order.');
+    } catch (\Exception $e) {
+      DB::rollBack();
+      return back()->with('error', 'An error occurred while placing your order. Please try again.');
+    }
   }
 
+  public function print($id)
+  {
+    $order = Order::with('food')->findOrFail($id);
+
+    return view('order.print', compact('order'));
+  }
 }

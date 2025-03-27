@@ -11,7 +11,7 @@
  Target Server Version : 110405 (11.4.5-MariaDB)
  File Encoding         : 65001
 
- Date: 19/03/2025 21:29:05
+ Date: 27/03/2025 22:31:48
 */
 
 SET NAMES utf8mb4;
@@ -46,22 +46,23 @@ CREATE TABLE `food`  (
   `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` double(8, 2) NOT NULL,
   `description` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `stock` bigint(20) NULL DEFAULT 0,
   `type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `picture` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `food_name_unique`(`name` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of food
 -- ----------------------------
-INSERT INTO `food` VALUES (1, 'Bolu Tape Keju', 70000.00, 'Bolu lembut dengan rasa tape keju 20 X 20', 'Bolu', 'storage/menu/bolu-tape.jpeg', '2025-01-16 15:28:40', '2025-01-16 15:28:40');
-INSERT INTO `food` VALUES (2, 'Brownies Panggang', 65000.00, 'Brownies dengan tekstur renyah di luar dan lembut di dalam. Ukuran 20x20', 'brownies', 'storage/menu/brownies-panggang.jpeg', '2025-01-16 15:28:40', '2025-01-16 15:28:40');
-INSERT INTO `food` VALUES (3, 'Brownies Ulang tahun', 70000.00, 'Brownies spesial untuk hari ulang tahun. Bisa request ucapan dan free lilin', 'brownies', 'storage/menu/brownis-ultah.jpeg', '2025-01-16 15:28:40', '2025-01-16 15:28:40');
-INSERT INTO `food` VALUES (4, 'Fuggie Brownies', 35000.00, 'Brownies fudgy dengan rasa cokelat yang pekat. Ukuran 22x10cm.', 'brownies', 'storage/menu/fuggie-brownies.jpeg', '2025-01-16 15:28:40', '2025-01-16 15:28:40');
-INSERT INTO `food` VALUES (5, 'Marmer Cake', 75000.00, 'Cake dengan motif marmer yang cantik dan lembut. Diameter 24cm.', 'Brownies', 'storage/menu/marmer-cake.jpeg', '2025-01-16 15:28:40', '2025-01-16 15:28:40');
+INSERT INTO `food` VALUES (1, 'Bolu Tape Keju', 70000.00, 'Bolu lembut dengan rasa tape keju 20 X 20', 0, 'Bolu', 'storage/menu/bolu-tape.jpeg', '2025-01-16 15:28:40', '2025-01-16 15:28:40');
+INSERT INTO `food` VALUES (2, 'Brownies Panggang', 65000.00, 'Brownies dengan tekstur renyah di luar dan lembut di dalam. Ukuran 20x20', 0, 'brownies', 'storage/menu/brownies-panggang.jpeg', '2025-01-16 15:28:40', '2025-01-16 15:28:40');
+INSERT INTO `food` VALUES (3, 'Brownies Ulang tahun', 70000.00, 'Brownies spesial untuk hari ulang tahun. Bisa request ucapan dan free lilin', 0, 'brownies', 'storage/menu/brownis-ultah.jpeg', '2025-01-16 15:28:40', '2025-01-16 15:28:40');
+INSERT INTO `food` VALUES (4, 'Fuggie Brownies', 35000.00, 'Brownies fudgy dengan rasa cokelat yang pekat. Ukuran 22x10cm.', 0, 'brownies', 'storage/menu/fuggie-brownies.jpeg', '2025-01-16 15:28:40', '2025-01-16 15:28:40');
+INSERT INTO `food` VALUES (5, 'Marmer Cake', 75000.00, 'Cake dengan motif marmer yang cantik dan lembut. Diameter 24cm.', 2, 'Brownies', 'storage/menu/marmer-cake.jpeg', '2025-01-16 15:28:40', '2025-01-16 15:28:40');
 
 -- ----------------------------
 -- Table structure for food_order
@@ -79,7 +80,7 @@ CREATE TABLE `food_order`  (
   INDEX `food_order_food_id_foreign`(`food_id` ASC) USING BTREE,
   CONSTRAINT `food_order_food_id_foreign` FOREIGN KEY (`food_id`) REFERENCES `food` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `food_order_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 37 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of food_order
@@ -105,6 +106,9 @@ INSERT INTO `food_order` VALUES (30, 24, 3, 1, 70000, 70000);
 INSERT INTO `food_order` VALUES (31, 25, 3, 1, 70000, 70000);
 INSERT INTO `food_order` VALUES (32, 26, 2, 5, 65000, 325000);
 INSERT INTO `food_order` VALUES (33, 28, 2, 1, 65000, 65000);
+INSERT INTO `food_order` VALUES (34, 29, 5, 4, 75000, 300000);
+INSERT INTO `food_order` VALUES (35, 37, 5, 3, 75000, 225000);
+INSERT INTO `food_order` VALUES (36, 39, 2, 2, 65000, 130000);
 
 -- ----------------------------
 -- Table structure for migrations
@@ -149,7 +153,7 @@ CREATE TABLE `orders`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `orders_user_id_foreign`(`user_id` ASC) USING BTREE,
   CONSTRAINT `orders_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orders
@@ -175,6 +179,9 @@ INSERT INTO `orders` VALUES (25, 2, '2025-03-19 21:14:54', 'pickup', 'proses', '
 INSERT INTO `orders` VALUES (26, 2, '2025-03-19 21:27:05', 'pickup', 'proses', 'pending', 'https://app.sandbox.midtrans.com/snap/v4/redirection/37769d93-e9cc-4cea-843d-1782b6b23f7d', 'Jl Tj seneng', 325000, '2025-03-19 21:27:05', '2025-03-19 21:27:05');
 INSERT INTO `orders` VALUES (27, 2, '2025-03-19 21:27:33', 'delivery', 'proses', NULL, NULL, 'Jl Tj seneng', NULL, '2025-03-19 21:27:33', '2025-03-19 21:27:33');
 INSERT INTO `orders` VALUES (28, 2, '2025-03-19 21:27:49', 'delivery', 'selesai', 'pending', 'https://app.sandbox.midtrans.com/snap/v4/redirection/2b5895c8-8bcf-4786-933b-ab4e201d9066', 'Jl Tj seneng', 65000, '2025-03-19 21:27:49', '2025-03-19 21:28:15');
+INSERT INTO `orders` VALUES (29, 2, '2025-03-27 21:50:13', 'pickup', 'proses', 'pending', 'https://app.sandbox.midtrans.com/snap/v4/redirection/a0fc8e6d-0849-462f-a1dc-790aefedd83c', 'Jl Tj seneng', 300000, '2025-03-27 21:50:13', '2025-03-27 21:50:14');
+INSERT INTO `orders` VALUES (37, 2, '2025-03-27 21:55:51', 'pickup', 'proses', 'pending', 'https://app.sandbox.midtrans.com/snap/v4/redirection/19a557d4-04d4-49b3-b1c1-48823ec31c9e', 'Jl Tj seneng', 225000, '2025-03-27 21:55:51', '2025-03-27 21:55:52');
+INSERT INTO `orders` VALUES (39, 2, '2025-03-27 22:31:06', 'pickup', 'proses', 'pending', 'https://app.sandbox.midtrans.com/snap/v4/redirection/c008a840-1d15-40de-a98f-7f2a8734e679', 'Jl Tj seneng', 130000, '2025-03-27 22:31:06', '2025-03-27 22:31:06');
 
 -- ----------------------------
 -- Table structure for password_resets

@@ -28,6 +28,6 @@ class Order extends Model
 
     public function food()
     {
-        return $this->belongsToMany(Food::class)->withPivot('quantity');
+        return $this->belongsToMany(Food::class)->withPivot('quantity', 'harga_item', 'total_item');
     }
 }

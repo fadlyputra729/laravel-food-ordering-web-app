@@ -7,18 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Food extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    public $timestamps = false;
-    protected $fillable = [
-        'name',
-        'price',
-        'description',
-        'type',
-        'picture',
-    ];
+  public $timestamps = false;
+  protected $fillable = [
+    'name',
+    'price',
+    'stock',
+    'description',
+    'type',
+    'picture',
+  ];
 
-    public function orders() {
-        return $this->belongsToMany(Order::class)->withPivot('quantity');
-    }
+  public function orders()
+  {
+    return $this->belongsToMany(Order::class)->withPivot('quantity');
+  }
 }

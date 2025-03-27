@@ -121,7 +121,7 @@
         </ul> -->
         <ul class="navbar-nav ms-auto">
           <li class="nav-item active relative">
-            <a class="nav-link" href="{{ url('home') }}">
+            <a class="nav-link" href="{{ route('home.index') }}">
               <div class="flex" id="navbtnhome" aria-describedby="tooltiphome" data-tooltip-text="Home">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                      stroke="currentColor" stroke-width="2">
@@ -194,7 +194,7 @@
 
           @can('isAdmin')
             <li class="nav-item active relative">
-              <a class="nav-link" href="{{ url('food/viewfood') }}">
+              <a class="nav-link" href="{{ route('food.index') }}">
                 <div class="flex" id="navbtnviewfood" aria-describedby="tooltipviewfood"
                      data-tooltip-text="View Food">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
