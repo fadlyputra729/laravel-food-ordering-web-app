@@ -5,7 +5,6 @@ if (session('cart') == null) {
 ?>
 @extends('layouts.app')
 @section('content')
-
   <div class="hidden flex w-full justify-center items-center" id="message-modal"
        data-object="{{ Session::get('unauthorized')}}">
     <div class="px-4 py-2 mb-4 mx-2 bg-red-100 w-8/12 flex">
@@ -14,27 +13,28 @@ if (session('cart') == null) {
     </div>
   </div>
 
-  <div class="mx-8">
-    <div class="flex flex-row">
-      <div class="flex flex-row space-x-4 flex-grow">
-        <span class="font-weight-bold sort-font my-auto"> Filter By :</span>
-        <div class="py-1 px-3 border-solid border-1 border-slate-300 rounded-xl text-center bg-white">
-          <a href="{{ route('home.index') }}" class="sort-font">All</a>
-        </div>
-        <div class="py-1 px-3 border-solid border-1 border-slate-300 rounded-xl text-center bg-white">
-          <a href="/home/Brownies" class="sort-font">Brownies</a>
-        </div>
-        <div class="py-1 px-3 border-solid border-1 border-slate-300 rounded-xl text-center bg-white">
-          <a href="/home/Bolu" class="sort-font">Bolu</a>
+  <div class="container px-4 mx-auto">
+    <div class="row align-items-center g-3 py-3">
+      <!-- Filter By Category -->
+      <div class="col-12 col-md-6">
+        <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-2">
+          <span class="fw-bold me-2">Filter By:</span>
+          <div class="d-flex flex-wrap gap-2">
+            <a href="http://127.0.0.1:8000" class="btn btn-outline-secondary btn-sm py-1 px-3 rounded-pill">All</a>
+            <a href="/home/Brownies" class="btn btn-outline-secondary btn-sm py-1 px-3 rounded-pill">Brownies</a>
+            <a href="/home/Bolu" class="btn btn-outline-secondary btn-sm py-1 px-3 rounded-pill">Bolu</a>
+          </div>
         </div>
       </div>
-      <div class="flex flex-row space-x-4 flex-grow justify-end">
-        <span class="font-weight-bold sort-font my-auto"> Urutkan Berdasarkan Harga:</span>
-        <div class="py-1 px-3 border-solid border-1 border-slate-300 rounded-xl text-center bg-white">
-          <a href="{{url()->current().'?asc=true'}}" class="sort-font">Terendah</a>
-        </div>
-        <div class="py-1 px-3 border-solid border-1 border-slate-300 rounded-xl text-center bg-white">
-          <a href="{{url()->current().'?asc=false'}}" class="sort-font">Tertinggi</a>
+
+      <!-- Sort By Price -->
+      <div class="col-12 col-md-6">
+        <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-2 justify-content-md-end">
+          <span class="fw-bold me-2">Urutkan Berdasarkan Harga:</span>
+          <div class="d-flex flex-wrap gap-2">
+            <a href="http://127.0.0.1:8000?asc=true" class="btn btn-outline-secondary btn-sm py-1 px-3 rounded-pill">Terendah</a>
+            <a href="http://127.0.0.1:8000?asc=false" class="btn btn-outline-secondary btn-sm py-1 px-3 rounded-pill">Tertinggi</a>
+          </div>
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\OrderController;
@@ -34,5 +35,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::resource('user', UserController::class);
+Route::post('notification', [NotificationController::class, 'index']);
 
 
