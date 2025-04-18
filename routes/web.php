@@ -35,6 +35,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::resource('user', UserController::class);
-Route::post('notif', [NotificationController::class, 'index']);
+Route::get('notif', [NotificationController::class, 'index']);
 
 
