@@ -32,8 +32,8 @@ if (session('cart') == null) {
         <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-2 justify-content-md-end">
           <span class="fw-bold me-2">Urutkan Berdasarkan Harga:</span>
           <div class="d-flex flex-wrap gap-2">
-            <a href="{{ route('home.index', ['asc' => true]) }}" class="btn btn-outline-secondary btn-sm py-1 px-3 rounded-pill">Terendah</a>
-            <a href="{{ route('home.index', ['asc' => false]) }}" class="btn btn-outline-secondary btn-sm py-1 px-3 rounded-pill">Tertinggi</a>
+            <a href="https://lizacakehouse.com?asc=true" class="btn btn-outline-secondary btn-sm py-1 px-3 rounded-pill">Terendah</a>
+            <a href="https://lizacakehouse.com?asc=false" class="btn btn-outline-secondary btn-sm py-1 px-3 rounded-pill">Tertinggi</a>
           </div>
         </div>
       </div>
