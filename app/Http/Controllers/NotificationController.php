@@ -4,23 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Midtrans\Notification;
 
 class NotificationController extends Controller
 {
     public function index(Request  $request)
     {
-      $serverKey = config('midtrans.server_key');
-
-      $signatureKey = hash("sha512",
-        $request->order_id .
-        $request->status_code .
-        $request->gross_amount .
-        $serverKey
-      );
-
-      if ($signatureKey !== $request->signature_key) {
-        return response()->json(['message' => 'Invalid signature key'], 403);
-      }
       $transaction = Order::find($request->order_id);
 
       if (!$transaction) {
