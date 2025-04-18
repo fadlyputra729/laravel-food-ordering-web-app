@@ -23,11 +23,9 @@
           <h4>Dari</h4>
           <address>
             <strong>Liza Cake</strong><br>
-            875 N Coast Hwybr<br>
-            Laguna Beach, California, 92651<br>
-            United States<br>
-            Phone: 08197922146<br>
-            Email: info@foodie.com.my
+            Jalan Karimun Jawa Perumahan Taman Seruni Indah<br>
+            Bandar Lampung<br>
+            WhatsApp : 08197922146<br>
           </address>
         </div>
       </div>
