@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use \App\Http\Controllers\HistoryOrderController;
 use \App\Http\Controllers\HomeController;
 
-Route::get('notif', [NotificationController::class, 'index']);
+Route::post('notif', [NotificationController::class, 'index']);
 Route::get('home/{type}', [HomeController::class, 'filter']);
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
