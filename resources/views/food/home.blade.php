@@ -20,7 +20,7 @@ if (session('cart') == null) {
         <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-2">
           <span class="fw-bold me-2">Filter By:</span>
           <div class="d-flex flex-wrap gap-2">
-            <a href="http://127.0.0.1:8000" class="btn btn-outline-secondary btn-sm py-1 px-3 rounded-pill">All</a>
+            <a href="/" class="btn btn-outline-secondary btn-sm py-1 px-3 rounded-pill">All</a>
             <a href="/home/Brownies" class="btn btn-outline-secondary btn-sm py-1 px-3 rounded-pill">Brownies</a>
             <a href="/home/Bolu" class="btn btn-outline-secondary btn-sm py-1 px-3 rounded-pill">Bolu</a>
           </div>
@@ -32,8 +32,8 @@ if (session('cart') == null) {
         <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-2 justify-content-md-end">
           <span class="fw-bold me-2">Urutkan Berdasarkan Harga:</span>
           <div class="d-flex flex-wrap gap-2">
-            <a href="http://127.0.0.1:8000?asc=true" class="btn btn-outline-secondary btn-sm py-1 px-3 rounded-pill">Terendah</a>
-            <a href="http://127.0.0.1:8000?asc=false" class="btn btn-outline-secondary btn-sm py-1 px-3 rounded-pill">Tertinggi</a>
+            <a href="{{ route('home.index', ['asc' => true]) }}" class="btn btn-outline-secondary btn-sm py-1 px-3 rounded-pill">Terendah</a>
+            <a href="{{ route('home.index', ['asc' => false]) }}" class="btn btn-outline-secondary btn-sm py-1 px-3 rounded-pill">Tertinggi</a>
           </div>
         </div>
       </div>
