@@ -18,7 +18,7 @@ class NotificationController extends Controller
       }
 
       if ($request->transaction_status == 'settlement' || $request->transaction_status == 'capture') {
-        $transaction->status_pembayaran = 'paid'; // Status pembayaran berhasil
+        $transaction->status_pembayaran = 'success'; // Status pembayaran berhasil
       } elseif ($request->transaction_status == 'cancel' || $request->transaction_status == 'expire') {
         $transaction->status_pembayaran = 'failed'; // Status pembayaran gagal atau kadaluarsa
       } elseif ($request->transaction_status == 'pending') {
