@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class NotificationController extends Controller
 {
     public function index(Request  $request)
     {
+      Log::error($request->all());
       $transaction = Order::find($request->order_id);
 
       if (!$transaction) {
