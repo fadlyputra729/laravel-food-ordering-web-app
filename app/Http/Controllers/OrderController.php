@@ -31,7 +31,6 @@ class OrderController extends Controller
       ->get();
 
     return view('order', ['orders' => $orders]);
-
   }
 
   public function create(Order $order)

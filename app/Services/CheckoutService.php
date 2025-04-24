@@ -30,7 +30,6 @@ class CheckoutService
       ],
       'customer_details' => [
         'first_name' => auth()->user()->name,
-        'email' => auth()->user()->email,
       ]
     ];
 

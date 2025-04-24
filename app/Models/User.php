@@ -21,7 +21,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
+        'username',
         'password',
         'address',
         'isAdmin',
@@ -49,6 +49,6 @@ class User extends Authenticatable
     ];
 
     public function orders() {
-        return $this->hasMany(Order::class); 
+        return $this->hasMany(Order::class);
     }
 }

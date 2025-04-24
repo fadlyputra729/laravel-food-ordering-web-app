@@ -22,10 +22,10 @@
                             @enderror
                         </div>
                         <div class="mb-4">
-                            <label for="email" class="form-label">{{ __('E-Mail Address') }}</label>
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                name="email" value="{{ old('email') }}" required autocomplete="email">
-                            @error('email')
+                            <label for="username" class="form-label">{{ __('Username') }}</label>
+                            <input id="username" type="text" class="form-control @error('username') is-invalid @enderror"
+                                name="username" value="{{ old('username') }}" required autocomplete="username">
+                            @error('username')
                             <small class="text-danger">
                                 <strong>{{ $message }}</strong>
                             </small>

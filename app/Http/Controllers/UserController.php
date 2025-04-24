@@ -26,7 +26,7 @@ class UserController extends Controller
         $id = Auth::id();
 
         $user->validate([
-            'email' => [
+            'username' => [
                 'required',
                 Rule::unique('users')->ignore($id),
             ],
@@ -36,7 +36,7 @@ class UserController extends Controller
 
         User::where('id', $id)->update([
             'name' => $user['name'],
-            'email' => $user['email'],
+            'username' => $user['username'],
             'address' => $user['address'],
         ]);
 
