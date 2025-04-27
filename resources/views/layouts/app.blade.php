@@ -227,9 +227,6 @@
                 <a class="dropdown-item" href="{{ route('user.index') }}">
                   {{ __('Pengaturan') }}
                 </a>
-                <a id="deleteuser" class="dropdown-item" href="#">
-                  {{ __('Hapus Akun') }}
-                </a>
                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                   {{ __('Logout') }}
